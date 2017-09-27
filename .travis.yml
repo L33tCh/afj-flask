@@ -1,0 +1,26 @@
+language: python
+python:
+- '3.6'
+- '3.5'
+- '3.4'
+- '2.7'
+service:
+- postgresql
+before_install:
+- export APP_SETTINGS="project.server.config.TestingConfig"
+- export SECRET_KEY="justatest"
+install:
+- pip install -r requirements.txt
+- pip install coveralls
+before_script:
+- psql -c 'create database flask_jwt_auth_test;' -U postgres
+- python manage.py db init
+- python manage.py db migrate
+- python manage.py db upgrade
+script:
+- python manage.py cov
+after_success: coveralls
+deploy:
+  provider: heroku
+  api_key:
+    secure: P09fjAJ3Gt0Tlt8bhNr6BSdVGFyL52GEedO0pwGMsGQyOTbhOU0eTvJPvXO46SWQ4IUSuVL6hxU65++hZpRvhxka9+h9Dptj5VHFa7/zwShrrleKH6cEEWhonjotPrT4QGa/TmSKmPVlcVBYT+NYgtQ+Dus0Bfpy1Sdqx7X4gabGUNor2sBGlCXksnYfWXI5ldL7hTiiCG7QhP6RMsRaGL8wraLQHem8QWP7hwzoflm0hPKScOeXhhu1Hwvwx1DCUjdcOpEXjSU1JxKNGW9/V514nb+M4wVa9+6fRuvE19csrHNUkaQVHZyD/0KTD6PRnUj789JXjDUYuhniHQI9nvOrCqQWdovBDeNI28HgJT2ohBFJ99/0uK5Ae2N0SaZbe0a5v2go2EqwuuZDvvfDpvyyCN6DND7bDCo8KTe8WshaZDn1G66kDFXA05iW+cU+1/k3CNHKcqkfxf+uA0xct3QmfWFqostn6ZuhiW1O+8fYmTqLvhS3YOU+ZVgKhn6VXY5JNFnx2YBk8XUs1nam2Cg5g6UWmw7Dg+8NnSlUB6T2CiJQWL8EXdbNgXF+OOFC8tMWMjzvb7DO+NAb3fU6P4YzheDT0h07YxFjITLLSQhG40reTMFsMv8RNI3UPdHSIR1LzGpotuAnt1nkeOcal1lXPWzGiT9PpaO/v8BgpMI=
