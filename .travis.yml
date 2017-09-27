@@ -15,7 +15,7 @@ before_script:
 - python manage.py db migrate
 - python manage.py db upgrade
 script:
-- python manage.py runserver
+- python manage.py cov
 after_success: coveralls
 deploy:
   provider: heroku
