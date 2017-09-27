@@ -1,1 +1,1 @@
-web: gunicorn project.server:app --log-file=-
+web: python manage.py runserver --log-file=-
