@@ -184,7 +184,8 @@ class TestAuthBlueprint(BaseTestCase):
             self.assertTrue(resp_login.content_type == 'application/json')
             self.assertEqual(resp_login.status_code, 200)
             # invalid token logout
-            time.sleep(605)  # ToDo: Update to use environment variable or something to enable adjusting for quicker testing
+            time.sleep(605)
+            # ToDo: Update to use environment variable or something to enable adjusting for quicker testing
             response = self.client.post(
                 '/auth/logout',
                 headers=dict(
