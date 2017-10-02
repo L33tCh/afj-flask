@@ -90,7 +90,7 @@ class LoginAPI(MethodView):
             print(e)
             responseObject = {
                 'status': 'fail',
-                'message': 'Try again'
+                'message': 'Try again: ' + str(e)
             }
             return make_response(jsonify(responseObject)), 500
 
